@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: postgres
+# Cookbook Name:: EAS
 # Recipe:: default
 #
 # Copyright 2013, YOUR_COMPANY_NAME
@@ -7,20 +7,22 @@
 # All rights reserved - Do Not Redistribute
 #
 
-postgres_install_loc=node['postgres']['postgres_install_loc']
-postgres_build_loc=node['postgres']['postgres_build_loc']
+eas_install_loc=node['eas']['eas_install_loc']
+eas_build_loc=node['eas']['eas_build_loc']
+jre_loc=node['eas']['jre_loc']
 
-template "/tmp/rbpm_postgresql_configure.properties" do
-  source "rbpm_postgresql_install.properties.erb"
+
+template "/tmp/eas_configure.properties" do
+  source "eas_configure.properties.erb"
   owner "root" 
   mode "0644"  
 end
 
 
-execute "Install Postgres" do
-  command " \"#{postgres_build_loc}\" -i silent -f \"/tmp/rbpm_postgresql_configure.properties\" "  
+execute "Configuring EAS" do
+  command " \"#{eas_build_loc}\" -DIA_USER_JRE_HOME=\"#{jre_loc}\" -i silent -f \"/tmp/eas_configure.properties\" "
+  creates "/opt/novell/sentinel_eas/EASConfigure.log"
   action :run
-  
 end
 
 
