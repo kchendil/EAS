@@ -22,7 +22,8 @@ end
 execute "Install EAS" do
   command " \"#{eas_build_loc}\" -DIA_USER_JRE_HOME=\"#{jre_loc}\" -i silent -f \"/tmp/eas_install.properties\" "
   creates "/opt/novell/sentinel_eas/EASInstall.log"
-  action :run
+   not_if { ::File.exists?("/opt/novell/sentinel_eas/EASInstall.log")}
+   action :run
 end
 
 
