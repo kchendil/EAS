@@ -22,7 +22,7 @@ end
 execute "Configuring EAS" do
   command " \"#{eas_build_loc}\" -DIA_USER_JRE_HOME=\"#{jre_loc}\" -i silent -f \"/tmp/eas_configure.properties\" "
   creates "/opt/novell/sentinel_eas/EASConfigure.log"
-  not_if { ::File.exists?("/opt/novell/sentinel_eas/EASConfigure.log")}
+  not_if { ::File.exists?("/var/opt/novell/sentinel_eas/log/server0.0.log")}
   action :run
 end
 
